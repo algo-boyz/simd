@@ -1,0 +1,43 @@
+linters:
+  enable:
+    - gosec
+    - gofmt
+    - govet
+    - errcheck
+    - gocyclo
+    - goimports
+    - gocritic
+  disable:
+    - nakedret
+  
+output:
+  # formats: colored-line-number|line-number|json|tab|checkstyle|code-climate, default is "colored-line-number"
+  print-issued-lines: true
+  print-linter-name: true
+  uniq-by-line: true
+  path-prefix: ""
+
+linters-settings:
+  errcheck:
+    check-type-assertions: true
+    check-blank: true
+
+  gocritic:
+    enabled-checks:
+      - builtinShadow
+      - emptyStringTest
+      - importShadow
+      - paramTypeCombine
+    disabled-tags:
+      - experimental
+  gocyclo:
+    min-complexity: 40
+  nakedret:
+    max-func-lines: 0
+  gofmt:
+    simplify: true
+  errorlint:
+    errorf: true
+
+run:
+  go: "1.23.1"

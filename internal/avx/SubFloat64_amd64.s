@@ -1,3 +1,4 @@
+// +build linux darwin
 // +build amd64
 
 // func SubFloat64(left, right, result []float64) int

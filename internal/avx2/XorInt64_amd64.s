@@ -1,3 +1,4 @@
+// +build linux darwin
 // +build amd64
 
 // func XorInt64(left, right, result []int64) int

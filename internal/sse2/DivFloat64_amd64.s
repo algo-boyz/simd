@@ -1,3 +1,4 @@
+// +build linux darwin
 // +build amd64
 
 // func DivFloat64(left, right, result []float64) int

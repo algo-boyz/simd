@@ -1,0 +1,15 @@
+bin/
+build/
+dist/
+
+.vscode/
+.idea/
+.DS_Store
+
+env/*
+
+!.gitignore
+
+__debug_bin*
+go.work.sum
+cover.*

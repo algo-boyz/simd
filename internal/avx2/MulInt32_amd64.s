@@ -1,3 +1,4 @@
+// +build linux darwin
 // +build amd64
 
 // func MulInt32(left, right, result []int32) int

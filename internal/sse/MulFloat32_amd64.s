@@ -1,3 +1,4 @@
+// +build linux darwin
 // +build amd64
 
 // func MulFloat32(left, right, result []float32) int

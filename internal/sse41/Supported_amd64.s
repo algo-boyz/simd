@@ -1,3 +1,4 @@
+// +build linux darwin
 // +build amd64
 
 // func Supported() bool

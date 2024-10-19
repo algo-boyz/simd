@@ -1,0 +1,75 @@
+name: CI
+
+on:
+  pull_request:
+  merge_group:
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: ${{ vars.GO_VERSION }}
+
+      - name: Tool bins
+        uses: actions/cache@v4
+        with:
+          path: bin
+          key: ${{ runner.os }}-bin-${{ hashFiles('**/go.sum') }}
+
+      - name: Lint Code Base
+        run: make lint
+
+  unit:
+    runs-on: ubuntu-latest
+    services:
+      dind:
+        image: docker:23.0-rc-dind-rootless
+        ports:
+          - 2375:2375
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: ${{ vars.GO_VERSION }}
+          cache: false
+
+      - name: Tool bins
+        uses: actions/cache@v4
+        with:
+          path: bin
+          key: ${{ runner.os }}-bin-${{ hashFiles('**/go.sum') }}
+
+      - name: Run tests
+        run: make gitest
+
+  generate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: ${{ vars.GO_VERSION }}
+
+      - name: Tool bins
+        uses: actions/cache@v4
+        with:
+          path: bin
+          key: ${{ runner.os }}-bin-${{ hashFiles('**/go.sum') }}
+
+      - name: Auto generate files
+        run: make generate
+
+      - name: Check for file changes
+        run: git diff --exit-code
