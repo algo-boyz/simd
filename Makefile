@@ -56,29 +56,17 @@ bench: | $(BUILD_DIR)
 	$(info $(M) running benchmarks locally…)
 	$Q $(GO) test $(PKGS) -benchmem -run=^\$$ -bench ./...
 
-.PHONY: lint # Run linter inside docker container
-docker-lint:
-	$(info $(M) docker: running linter…)
-	@docker build . --target lint
-
 .PHONY: test-docker # Build simd inside docker container
 docker-build:
 	$(info $(M) docker: ${TARGETOS} ${TARGETARCH} building executable…)
 	@docker build . --target bin \
 	--output build/ \
-	--platform linux/amd64
+	--platform darwin/arm64
 
 .PHONY: test-docker # Run all tests inside docker container
 docker-test:
 	$(info $(M) docker: running tests…)
 	docker-compose up test
-
-.PHONY: unit-test-coverage # Generate coverage report inside docker container
-docker-coverage:
-	$(info $(M) docker: generate test coverage…)
-	@docker build . --target unit-test-coverage \
-	--output coverage/
-	cat coverage/cover.out
 
 .PHONY: gitest # Run GitHub Actions
 gitest:
